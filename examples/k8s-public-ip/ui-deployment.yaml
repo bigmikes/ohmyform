@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: ui
+  name: ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: ui
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: ui
+    spec:
+      containers:
+        - env:
+            - name: ENDPOINT
+              value: http://34.67.40.146:31600/graphql
+            - name: PORT
+              value: "5000"
+            - name: SERVER_ENDPOINT
+              value: http://34.67.40.146:31600/graphql
+          image: ohmyform/ui
+          name: ui
+          ports:
+            - containerPort: 5000
+          resources: {}
+      restartPolicy: Always
+status: {}

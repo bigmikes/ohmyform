@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: api
+  name: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: api
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: api
+    spec:
+      containers:
+        - env:
+            - name: ADMIN_EMAIL
+              value: admin@local.host
+            - name: ADMIN_PASSWORD
+              value: admin
+            - name: ADMIN_USERNAME
+              value: admin
+            - name: CREATE_ADMIN
+              value: "true"
+            - name: DATABASE_DRIVER
+              value: postgres
+            - name: DATABASE_URL
+              value: postgresql://root:root@db:5432/ohmyform
+            - name: MAILER_URI
+              value: smtp://local.host
+            - name: PORT
+              value: "5000"
+            - name: REDIS_URL
+              value: redis://redis
+          image: ohmyform/api
+          name: api
+          ports:
+            - containerPort: 5000
+          resources: {}
+      restartPolicy: Always
+status: {}
